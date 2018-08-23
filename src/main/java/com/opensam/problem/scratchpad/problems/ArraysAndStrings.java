@@ -37,4 +37,22 @@ public class ArraysAndStrings {
 
     return true;
   }
+
+  public boolean isAnyPermutationAPalindrome(String input) {
+    if (input == null || "".equals(input))
+      return false;
+
+    Map<Character, Integer> countByCharacter = new HashMap<>();
+    for (Character ch : input.toCharArray()) {
+      if (Character.isAlphabetic(ch)) {
+        char lowerCaseCh = ch.toLowerCase(ch);
+        int currentCount = countByCharacter.computeIfAbsent(lowerCaseCh, value -> 0);
+        countByCharacter.put(lowerCaseCh, currentCount + 1);
+      }
+    }
+
+    return countByCharacter.values().stream()
+        .filter(count -> count % 2 != 0)
+        .count() <= 1;
+  }
 }

@@ -28,4 +28,14 @@ public class ArraysAndStringsTests {
 
     Assert.assertFalse(arraysAndStrings.isPermutation("qwerty", "some"));
   }
+
+  @Test
+  public void isAnyPermutationAPalindrome() {
+    Assert.assertFalse(arraysAndStrings.isAnyPermutationAPalindrome(null));
+    Assert.assertFalse(arraysAndStrings.isAnyPermutationAPalindrome(""));
+
+    Assert.assertTrue(arraysAndStrings.isAnyPermutationAPalindrome("Tact Coa"));
+    
+    Assert.assertFalse(arraysAndStrings.isAnyPermutationAPalindrome("Nope"));
+  }
 }
