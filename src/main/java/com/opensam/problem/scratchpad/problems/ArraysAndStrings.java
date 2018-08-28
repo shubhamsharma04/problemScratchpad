@@ -1,5 +1,7 @@
 package com.opensam.problem.scratchpad.problems;
 
+import org.springframework.util.StringUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,5 +56,33 @@ public class ArraysAndStrings {
     return countByCharacter.values().stream()
         .filter(count -> count % 2 != 0)
         .count() <= 1;
+  }
+
+  public boolean areStringsRotated(String first, String second) {
+    if(first == null || second == null)
+      return false;
+    if(first.length() != second.length())
+      return false;
+
+    int indexOfRotatedStart = 0;
+    int rotationCount = 0;
+    char firstChar = first.charAt(indexOfRotatedStart);
+    int length = first.length();
+
+    while(indexOfRotatedStart + rotationCount < length) {
+      if(firstChar == second.charAt(indexOfRotatedStart)) {
+        while(indexOfRotatedStart + rotationCount < length && first.charAt(rotationCount) == second.charAt(indexOfRotatedStart + rotationCount)) {
+          rotationCount++;
+        }
+        if(indexOfRotatedStart + rotationCount < length ) {
+          indexOfRotatedStart = indexOfRotatedStart + rotationCount;
+          rotationCount = 0;
+        }
+      } else {
+        indexOfRotatedStart++;
+      }
+    }
+
+    return StringUtils.startsWithIgnoreCase(first.substring(0, rotationCount) + second, first);
   }
 }

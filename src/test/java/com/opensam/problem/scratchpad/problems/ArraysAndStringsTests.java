@@ -35,7 +35,17 @@ public class ArraysAndStringsTests {
     Assert.assertFalse(arraysAndStrings.isAnyPermutationAPalindrome(""));
 
     Assert.assertTrue(arraysAndStrings.isAnyPermutationAPalindrome("Tact Coa"));
-    
+
     Assert.assertFalse(arraysAndStrings.isAnyPermutationAPalindrome("Nope"));
+  }
+
+  @Test
+  public void areStringsRotatedTests() {
+    Assert.assertFalse(arraysAndStrings.areStringsRotated(null, "abc"));
+    Assert.assertFalse(arraysAndStrings.areStringsRotated("abc", null));
+    Assert.assertFalse(arraysAndStrings.areStringsRotated("abc", "abcd"));
+
+    Assert.assertTrue(arraysAndStrings.areStringsRotated("waterbottle", "erbottlewat"));
+    Assert.assertTrue(arraysAndStrings.areStringsRotated("waterbottle", "waterbottle"));
   }
 }
