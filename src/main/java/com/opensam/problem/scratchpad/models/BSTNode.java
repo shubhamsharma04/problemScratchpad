@@ -5,6 +5,10 @@ public class BSTNode {
   private int data;
   private BSTNode right;
 
+  public BSTNode() {
+
+  }
+
   public BSTNode(int data) {
     this.data = data;
   }

@@ -1,6 +1,7 @@
 package com.opensam.problem.scratchpad.problems;
 
 import com.opensam.problem.scratchpad.models.BSTNode;
+import com.opensam.problem.scratchpad.models.BinaryNode;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -55,5 +56,24 @@ public class GraphsAndTrees {
     }
 
     return root;
+  }
+
+  public int getPathCountWithSum(BinaryNode node, int sum) {
+    return getPathCountWithSum(node, sum, sum);
+  }
+
+  private int getPathCountWithSum(BinaryNode node, int totalSum, int sumNeeded) {
+    if(node == null)
+      return 0;
+
+    int currentCount = node.getData() == sumNeeded
+        ? 1
+        : 0;
+
+    return currentCount + getPathCountWithSum((BinaryNode) node.getLeft(), totalSum, sumNeeded - node.getData())
+                        + getPathCountWithSum((BinaryNode) node.getRight(), totalSum, sumNeeded - node.getData())
+                        + getPathCountWithSum((BinaryNode) node.getLeft(), totalSum, totalSum)
+                        + getPathCountWithSum((BinaryNode) node.getRight(), totalSum, totalSum);
+
   }
 }
