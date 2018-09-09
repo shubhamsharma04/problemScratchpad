@@ -2,11 +2,16 @@ package com.opensam.problem.scratchpad.problems;
 
 import com.opensam.problem.scratchpad.models.BSTNode;
 import com.opensam.problem.scratchpad.models.BinaryNode;
+import com.opensam.problem.scratchpad.models.Edge;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Set;
 
 @Component
@@ -60,6 +65,31 @@ public class GraphsAndTrees {
 
   public int getPathCountWithSum(BinaryNode node, int sum) {
     return getPathCountWithSum(node, sum, sum);
+  }
+
+  public int[] djikstra(List<List<Edge>> adjList) {
+    Set<Integer> coveredVertices = new HashSet<>();
+    Queue<Edge> priorityQueue = new PriorityQueue<>();
+    int[] output = new int[adjList.size()];
+
+    priorityQueue.addAll(adjList.get(0));
+    coveredVertices.add(0);
+
+    while (coveredVertices.size() != adjList.size() - 1) {
+      Edge leastWeightEdge = priorityQueue.remove();
+
+      while(!coveredVertices.contains(leastWeightEdge.getTo())) {
+        leastWeightEdge = priorityQueue.remove();
+      }
+
+      int currentMinWeight = leastWeightEdge.getWeight();
+
+      output[leastWeightEdge.getTo()] = currentMinWeight;
+      coveredVertices.add(leastWeightEdge.getTo());
+      List<Edge> newEdges = adjList.get(leastWeightEdge.getTo());
+      newEdges.forEach(edge -> priorityQueue.add(new Edge(edge.getFrom(), edge.getTo(), edge.getWeight() + currentMinWeight)));
+    }
+    return output;
   }
 
   private int getPathCountWithSum(BinaryNode node, int totalSum, int sumNeeded) {
