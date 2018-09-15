@@ -1,8 +1,11 @@
 package com.opensam.problem.scratchpad.problems;
 
+import com.opensam.problem.scratchpad.models.AnagramComparator;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @Component
 public class SearchAndSort {
@@ -47,5 +50,14 @@ public class SearchAndSort {
     while (rightStart <= end) {
       input[currIndex++] = helper[rightStart++];
     }
+  }
+
+  public List<String> sortWithAnagramCaveat(List<String> input) {
+    if(input == null)
+      return null;
+
+    Collections.sort(input, new AnagramComparator());
+
+    return input;
   }
 }
