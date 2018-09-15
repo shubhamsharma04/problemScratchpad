@@ -5,8 +5,6 @@ import com.opensam.problem.scratchpad.models.BinaryNode;
 import com.opensam.problem.scratchpad.models.Edge;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
