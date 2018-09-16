@@ -3,7 +3,6 @@ package com.opensam.problem.scratchpad.problems;
 import com.opensam.problem.scratchpad.models.AnagramComparator;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -59,5 +58,46 @@ public class SearchAndSort {
     Collections.sort(input, new AnagramComparator());
 
     return input;
+  }
+
+  public int getIndex(int[] input, int element) {
+    if (input == null || input.length == 0)
+      return -1;
+
+    int length = input.length;
+
+    int rotatedIndex = length == 1 ?
+        0 :
+        getRotatedIndex(input, 0, length - 1);
+
+    int start = element > input[0] && element < input[rotatedIndex] ? 0 : rotatedIndex;
+    int end = start != 0 ? length - 1 : rotatedIndex;
+
+    return binarySearch(input, element, start, end);
+  }
+
+  private int getRotatedIndex(int[] input, int start, int end) {
+    if (start == end - 1)
+      return end;
+    int mid = (start + end) / 2;
+
+    if (input[mid] > input[start])
+      return getRotatedIndex(input, mid, end);
+    else
+      return getRotatedIndex(input, start, mid);
+
+  }
+
+  private int binarySearch(int[] input, int element, int start, int end) {
+    if (start > end)
+      return -1;
+
+    int mid = (start + end) / 2;
+
+    if (input[mid] == element)
+      return mid;
+    if (input[mid] < element)
+      return binarySearch(input, element, mid + 1, end);
+    return binarySearch(input, element, start, mid - 1);
   }
 }
