@@ -4,6 +4,7 @@ import com.opensam.problem.scratchpad.models.AnagramComparator;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 @Component
@@ -61,6 +62,10 @@ public class SearchAndSort {
   }
 
   public int getIndex(int[] input, int element) {
+    List<Integer> l = new LinkedList<>();
+    int [] copy = new int[l.size()];
+    l.toArray(new int[][]{copy});
+
     if (input == null || input.length == 0)
       return -1;
 
