@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Arrays;
+
 @RunWith(SpringRunner.class)
 public class ArraysAndStringsTests {
 
@@ -47,5 +49,13 @@ public class ArraysAndStringsTests {
 
     Assert.assertTrue(arraysAndStrings.areStringsRotated("waterbottle", "erbottlewat"));
     Assert.assertTrue(arraysAndStrings.areStringsRotated("waterbottle", "waterbottle"));
+  }
+
+  @Test
+  public void getPairsToMakeSumEqualTests() {
+    Assert.assertNull(arraysAndStrings.getPairsToMakeSumEqual(null, null));
+    Assert.assertNull(arraysAndStrings.getPairsToMakeSumEqual(new int[]{}, new int[]{3,6,3,3}));
+
+    Assert.assertEquals(Arrays.asList(1, 3), arraysAndStrings.getPairsToMakeSumEqual(new int[]{4, 1, 2, 1, 1, 2}, new int[]{3, 6, 3, 3}));
   }
 }

@@ -2,8 +2,12 @@ package com.opensam.problem.scratchpad.problems;
 
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ArraysAndStrings {
 
@@ -85,4 +89,47 @@ public class ArraysAndStrings {
 
     return StringUtils.startsWithIgnoreCase(first.substring(0, rotationCount) + second, first);
   }
+
+  public List<Integer> getPairsToMakeSumEqual(int[] first, int[] second) {
+
+    if(first == null || second == null || first.length == 0 || second.length == 0)
+      return null;
+
+    Set<Integer> firstElements = new HashSet<>();
+    int firstSum = 0;
+
+    Set<Integer> secondElements = new HashSet<>();
+    int secondSum = 0;
+
+    for ( int i : first) {
+      firstSum+=i;
+      firstElements.add(i);
+    }
+
+    for (int i : second) {
+      secondSum += i;
+      secondElements.add(i);
+    }
+
+    int totalSum = firstSum + secondSum;
+
+    if (totalSum %2 != 0)
+      return null;
+
+    int requiredSum = totalSum/2;
+    int diff = requiredSum - firstSum;
+    List<Integer> result = new ArrayList<>();
+
+    for(int i : firstElements) {
+      if(secondElements.contains(diff + i)){
+        result.add(i);
+        result.add(diff + i);
+        break;
+      }
+    }
+
+    return result;
+
+  }
+
 }
