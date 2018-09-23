@@ -11,4 +11,9 @@ public class BitManipulation {
     M = M << j;
     return N | M;
   }
+
+  public void scratch() {
+    int input = 0b10011;
+    System.out.println((input & ~(1 << 3)));
+  }
 }

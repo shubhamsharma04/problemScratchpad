@@ -5,9 +5,12 @@ import com.opensam.problem.scratchpad.models.BinaryNode;
 import com.opensam.problem.scratchpad.models.Edge;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
@@ -88,6 +91,39 @@ public class GraphsAndTrees {
       newEdges.forEach(edge -> priorityQueue.add(new Edge(edge.getFrom(), edge.getTo(), edge.getWeight() + currentMinWeight)));
     }
     return output;
+  }
+
+  public void kruskal(List<Edge> edges) {
+    Queue<Edge> priorityEdges = new PriorityQueue<>();
+    Map<Integer, Integer> disjointSets = new HashMap<>();
+
+    edges.forEach(edge -> {
+      priorityEdges.add(edge);
+      disjointSets.put(edge.getFrom(), edge.getFrom());
+      disjointSets.put(edge.getTo(), edge.getTo());
+    });
+
+    int numOfVertices = disjointSets.size();
+    List<Edge> selectedEdges = new ArrayList<>();
+
+    while (selectedEdges.size() != numOfVertices - 1) {
+      Edge highestPriorityEdge = priorityEdges.remove();
+
+      if(findSet(highestPriorityEdge.getFrom(), disjointSets) != findSet(highestPriorityEdge.getTo(), disjointSets)){
+        selectedEdges.add(highestPriorityEdge);
+        union(highestPriorityEdge.getFrom(), highestPriorityEdge.getTo(), disjointSets);
+      }
+    }
+  }
+
+  private void union(int from, int to, Map<Integer,Integer> disjointSets) {
+    disjointSets.put(findSet(from, disjointSets), findSet(to, disjointSets));
+  }
+
+  private int findSet(int element, Map<Integer, Integer> disjointSets) {
+    if(disjointSets.get(element) == element)
+      return element;
+    return findSet(disjointSets.get(element), disjointSets);
   }
 
   private int getPathCountWithSum(BinaryNode node, int totalSum, int sumNeeded) {

@@ -20,4 +20,9 @@ public class BitManipulationTests {
   public void insertInBetweenTests() {
     Assert.assertEquals(0b10001001100, bitManipulation.insertInBetween(0b10000000000, 0b10011, 2 ,6));
   }
+
+  @Test
+  public void scratchTest() {
+    bitManipulation.scratch();
+  }
 }
