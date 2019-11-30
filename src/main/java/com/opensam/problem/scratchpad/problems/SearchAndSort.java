@@ -3,52 +3,90 @@ package com.opensam.problem.scratchpad.problems;
 import com.opensam.problem.scratchpad.models.AnagramComparator;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 @Component
 public class SearchAndSort {
 
-  public void mergeSort(int[] input, int start, int end) {
-    if (start >= end)
-      return;
-
-    int mid = (start + end) / 2;
-
-    mergeSort(input, start, mid);
-    mergeSort(input, mid+1, end);
-    merge(input, start, mid, end);
-
+  public void quickSort(int [] arr) {
+    if(arr != null) {
+      quickSort(arr, 0, arr.length - 1);
+    }
   }
 
-  private static void merge(int[] input, int start, int mid, int end) {
-    int [] helper = new int[input.length];
-    for (int i = start; i <= end; i++) {
+  private void quickSort(int [] arr, int left, int right) {
+    int partition = getPartition(arr, left, right);
+    if(left < partition - 1) {
+      quickSort(arr, left, partition - 1);
+    }
+
+    if(partition < right) {
+      quickSort(arr, partition, right);
+    }
+  }
+
+  private int getPartition(int [] arr, int left, int right) {
+    int pivot = arr[(left + right)/2];
+
+    while(left <= right) {
+      while(arr[left] < pivot) left++;
+      while(arr[right] > pivot) right--;
+
+      if(left <= right) {
+        swap(arr, left, right);
+        left++;
+        right--;
+      }
+    }
+
+    return left;
+  }
+
+  private void swap(int[] arr, int left, int right) {
+    int temp = arr[left];
+    arr[left] = arr[right];
+    arr[right] = temp;
+  }
+
+  public void mergeSort(int [] input) {
+    if(input == null || input.length == 0) {
+      return;
+    }
+
+    mergeSort(input, new int[input.length], 0, input.length - 1);
+  }
+
+  public void mergeSort(int [] input, int [] helper, int left, int right) {
+    if(left < right) {
+      int middle = (left + right) / 2;
+      mergeSort(input, helper, left, middle);
+      mergeSort(input, helper, middle + 1, right);
+      merge(input, helper, left, middle, right);
+    }
+  }
+
+  private void merge(int [] input, int [] helper, int left, int middle, int right) {
+    for(int i=left; i <= right; i++) {
       helper[i] = input[i];
     }
 
-    int rightStart = mid + 1;
+    int leftIndex = left;
+    int currentIndex = left;
+    int rightIndex = middle + 1;
 
-    int currIndex = start;
-    while (start <= mid && rightStart <= end) {
-      if (helper[start] <= helper[rightStart]) {
-        input[currIndex] = helper[start];
-        start++;
+    while(leftIndex <= middle && rightIndex <= right) {
+      if(helper[leftIndex] < helper[rightIndex]) {
+        input[currentIndex] = helper[leftIndex++];
       } else {
-        input[currIndex] = helper[rightStart];
-        rightStart++;
+        input[currentIndex] = helper[rightIndex++];
       }
 
-      currIndex++;
+      currentIndex++;
     }
 
-    while (start <= mid) {
-      input[currIndex++] = helper[start++];
-    }
-
-    while (rightStart <= end) {
-      input[currIndex++] = helper[rightStart++];
+    while(leftIndex <= middle) {
+      input[currentIndex++] = helper[leftIndex++];
     }
   }
 
@@ -56,7 +94,7 @@ public class SearchAndSort {
     if(input == null)
       return null;
 
-    Collections.sort(input, new AnagramComparator());
+    input.sort(new AnagramComparator());
 
     return input;
   }

@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.util.Objects.hash;
+import static junit.framework.TestCase.assertTrue;
+
 @RunWith(SpringRunner.class)
 public class SearchAndSortTests {
 
@@ -23,8 +26,15 @@ public class SearchAndSortTests {
   @Test
   public void mergeSortTest() {
     int[] input = new int[]{1, 4, 5, 2, 8, 9};
+    searchAndSort.mergeSort(input);
+    assertTrue(Arrays.equals(new int[]{1, 2, 4, 5, 8, 9}, input));
+  }
 
-    searchAndSort.mergeSort(input, 0, input.length - 1);
+  @Test
+  public void quickSortTest() {
+    int[] input = new int[]{1, 4, 5, 2, 8, 9};
+    searchAndSort.quickSort(input);
+    assertTrue(Arrays.equals(new int[]{1, 2, 4, 5, 8, 9}, input));
   }
 
   @Test
@@ -41,5 +51,10 @@ public class SearchAndSortTests {
     Assert.assertEquals(6, searchAndSort.getIndex(new int[]{15, 16, 20, 1, 3, 4, 5, 7, 10, 14}, 5));
     Assert.assertEquals(6, searchAndSort.getIndex(new int[]{15, 16, 20, 1, 3, 4, 5, 10, 14}, 5));
     Assert.assertEquals(3, searchAndSort.getIndex(new int[]{1, 3, 4, 5}, 5));
+  }
+
+  @Test
+  public void hashTest() {
+    System.out.println(hash("123") + ", " + "123".hashCode());
   }
 }
